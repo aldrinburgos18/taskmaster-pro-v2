@@ -104,6 +104,7 @@ $(".list-group").on("blur", "textarea", function () {
 
   //update task in array and save to localStorage
   tasks[status][index].text = text;
+  console.log(tasks[status][index]);
   saveTasks();
 
   //recreate p element

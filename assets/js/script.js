@@ -85,6 +85,11 @@ $("#remove-tasks").on("click", function () {
   saveTasks();
 });
 
+//use jQuery UI's date picker
+$("#modalDueDate").datepicker({
+  minDate: 0,
+});
+
 //task text was clicked
 $(".list-group").on("click", "p", function () {
   var text = $(this).text().trim();
@@ -104,7 +109,6 @@ $(".list-group").on("blur", "textarea", function () {
 
   //update task in array and save to localStorage
   tasks[status][index].text = text;
-  console.log(tasks[status][index]);
   saveTasks();
 
   //recreate p element
@@ -127,11 +131,20 @@ $(".list-group").on("click", "span", function () {
   //swap out elements
   $(this).replaceWith(dateInput);
 
-  //automatically focus on new element
+  //enable jQuery UI datepicker
+  dateInput.datepicker({
+    minDate: 0,
+    onClose: function () {
+      //when calendar is closed, force a "change" event on the `dateInput`
+      $(this).trigger("change");
+    },
+  });
+
+  //automatically bring up the calendar
   dateInput.trigger("focus");
 });
 
-$(".list-group").on("blur", "input[type='text']", function () {
+$(".list-group").on("change", "input[type='text']", function () {
   //get current text
   var date = $(this).val().trim();
   //get the parent ul's id attribute

@@ -245,3 +245,10 @@ var auditTask = function (taskEl) {
 
 // load tasks for the first time
 loadTasks();
+
+//runs task auditor every 30 minutes
+setInterval(function () {
+  $(".card .list-group-item").each(function (index, el) {
+    auditTask(el);
+  });
+}, 1000 * 60 * 30);
